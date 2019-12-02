@@ -8,7 +8,7 @@ end to end ML pipelines.
 
 ### ML Pipelines
 
-<img src="https://miro.medium.com/max/1688/1*rJGhyaChhnN_f4pg_T4__A.png" alt="ML Pipelines"/>
+![ML Pipelines](https://miro.medium.com/max/1688/1*rJGhyaChhnN_f4pg_T4__A.png)
 
 ### Components
 
