@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+
+from core.cli import command_dispatcher
+
+cli = command_dispatcher()
+cli()
