@@ -17,9 +17,9 @@ A machine learning pipeline is used to help automate machine learning workflows.
 Basic Building Units of Plasma pipelines, each component denotes a node in
 the pipeline graph.
 
-#### Pipelines
+#### Workflow
 
-A YAML defined workflow which defines an end to end ML system.
+A YAML defined sequence of operations which orchestrates an end to end ML system.
 
 #### Resources
 
