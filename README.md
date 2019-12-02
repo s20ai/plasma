@@ -8,6 +8,8 @@ end to end ML pipelines.
 
 #### ML Pipelines
 
+A machine learning pipeline is used to help automate machine learning workflows.They operate by enabling a sequence of data to be transformed and correlated together in a model that can be tested and evaluated to achieve an outcome, whether positive or negative.
+
 ![ML Pipelines](https://miro.medium.com/max/1688/1*rJGhyaChhnN_f4pg_T4__A.png)
 
 #### Components
