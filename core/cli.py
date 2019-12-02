@@ -20,25 +20,25 @@ def connect():
 
 # Pipeline command group
 
-@click.group(help="Manage Plasma Pipelines")
-def pipeline():
+@click.group(help="Manage Plasma Workflows")
+def workflow():
     pass
 
 
-@click.command(name="list", help="list existing pipelines")
-def list_pipeline():
+@click.command(name="list", help="list existing workflows")
+def list_workflow():
     pass
 
 
-@click.command(name="run", help="run pipeline")
-@click.argument('pipeline_name', required=True)
-def run_pipeline(pipeline_name):
+@click.command(name="run", help="run workflow")
+@click.argument('workflow_name', required=True)
+def run_workflow(workflow_name):
     pass
 
 
-@click.command(name="schedule", help="schedule pipelines")
-@click.argument('pipeline_name', required=True)
-def schedule_pipeline(pipeline_name):
+@click.command(name="schedule", help="schedule workflows")
+@click.argument('workflow_name', required=True)
+def schedule_workflow(workflow_name):
     pass
 
 
@@ -75,14 +75,14 @@ def run_component(component_name, parameters):
 
 
 def command_dispatcher():
-    pipeline.add_command(list_pipeline)
-    pipeline.add_command(run_pipeline)
-    pipeline.add_command(schedule_pipeline)
+    workflow.add_command(list_workflow)
+    workflow.add_command(run_workflow)
+    workflow.add_command(schedule_workflow)
     component.add_command(list_component)
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(run_component)
     plasma_cli.add_command(status)
     plasma_cli.add_command(component)
-    plasma_cli.add_command(pipeline)
+    plasma_cli.add_command(workflow)
     return plasma_cli
