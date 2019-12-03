@@ -18,7 +18,14 @@ def connect():
     raise NotImplementedError
 
 
-# Pipeline command group
+# Configure command group
+
+@click.command(help="configure plasma")
+def configure():
+    pass
+
+# Workflow command group
+
 
 @click.group(help="Manage Plasma Workflows")
 def workflow():
@@ -82,6 +89,7 @@ def command_dispatcher():
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(run_component)
+    plasma_cli.add_command(configure)
     plasma_cli.add_command(status)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
