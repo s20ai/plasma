@@ -12,18 +12,14 @@ A machine learning pipeline is used to help automate machine learning workflows.
 
 ![ML Pipelines](https://miro.medium.com/max/1688/1*rJGhyaChhnN_f4pg_T4__A.png)
 
-#### Components
+#### Resources - An asset owned by an organization such as a DataSet or a ML Model.
 
-Basic Building Units of Plasma pipelines, each component denotes a node in
-the pipeline graph.
+#### Component - Code which can use a resource to perform one or more step in a workflow graph.
 
-#### Workflow
+#### Workflow - A YAML defined graph comprised of resources and components which represent a ML pipeline. 
 
-A YAML defined sequence of operations which orchestrates an end to end ML system.
+#### Execution Context - workflow/component configuration which would specify how the component should be executed or provisioned.
 
-#### Resources
-
-A data source or a model which can be utilized by components in the pipeline.
 
 ## Usage
 
