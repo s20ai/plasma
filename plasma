@@ -1,6 +1,18 @@
 #!/usr/bin/python3
 
 from core.cli import command_dispatcher
+from logging.handlers import RotatingFileHandler
+import logging, sys
 
-cli = command_dispatcher()
-cli()
+
+if __name__=="__main__":
+    # set up logging 
+    file_handler = handler = RotatingFileHandler('./logs/plasma.log', maxBytes=10000)
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    handlers = [stdout_handler, file_handler]
+    format_string = '%(asctime)s | %(levelname)7s | %(message)s'
+    date_format = '%m/%d/%Y %I:%M:%S %p'
+    logging.basicConfig(handlers=handlers,level=logging.DEBUG, format=format_string,datefmt = date_format)
+    # start CLI
+    cli = command_dispatcher()
+    cli()
