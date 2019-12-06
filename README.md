@@ -1,7 +1,7 @@
 # Plasma 
 
 Plasma is an open source tool which can be used to create and maintain
-end to end ML pipelines. 
+end to end ML Workflows. 
 
 
 ## Concepts
