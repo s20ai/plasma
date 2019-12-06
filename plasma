@@ -10,9 +10,7 @@ import json
 
 
 if __name__ == "__main__":
-    # setup plasma
     plasma_config = setup_plasma()
-    # set up logging
     file_handler = handler = RotatingFileHandler(
         plasma_config['log_path']+'/plasma.log', maxBytes=10000)
     stdout_handler = logging.StreamHandler(sys.stdout)
@@ -20,7 +18,6 @@ if __name__ == "__main__":
     format_string = '%(asctime)s | %(levelname)7s | %(message)s'
     date_format = '%m/%d/%Y %I:%M:%S %p'
     logging.basicConfig(handlers=handlers, level=logging.DEBUG,
-                        format=format_string, datefmt=date_format)
-    # start CLI
+                        format=format_string, datefmt=date_format)   
     cli = command_dispatcher()
     cli()
