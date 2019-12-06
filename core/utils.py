@@ -25,3 +25,9 @@ def setup_plasma():
             json.dump(plasma_config,config_file)
     return plasma_config
 
+def get_config():
+    home = str(Path.home())
+    config_file_path = home+'/.plasma/plasma_config.json'
+    with open(config_file_path) as config_file:
+        plasma_config=json.load(config_file)
+    return plasma_config
