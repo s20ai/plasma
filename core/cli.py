@@ -43,6 +43,12 @@ def run_workflow(workflow_name):
     pass
 
 
+@click.command(name="describe", help="describe workflow")
+@click.argument('workflow_name', required=True)
+def describe_workflow(workflow_name):
+    pass
+
+
 @click.command(name="schedule", help="schedule workflows")
 @click.argument('workflow_name', required=True)
 def schedule_workflow(workflow_name):
@@ -84,6 +90,7 @@ def run_component(component_name, parameters):
 def command_dispatcher():
     workflow.add_command(list_workflow)
     workflow.add_command(run_workflow)
+    workflow.add_command(describe_workflow)
     workflow.add_command(schedule_workflow)
     component.add_command(list_component)
     component.add_command(search_component)
