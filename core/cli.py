@@ -1,16 +1,17 @@
 #!/usr/bin/python3
 
+from core.utils import get_status
 import click
-
+import os
 
 @click.group()
 def plasma_cli():
     pass
 
 
-@click.command(help="Display status information")
+@click.command(help="display status information")
 def status():
-    return True
+    get_status()
 
 
 @click.command(help="Connect to plasma dashboard")
@@ -18,16 +19,38 @@ def connect():
     raise NotImplementedError
 
 
-# Configure command group
+# Model command group
 
+@click.group(help="manage connected models")
+def model():
+    pass
+
+
+@click.command(name="list",help="list connected models")
+def list_model():
+    raise NotImplementedError
+
+
+@click.command(name="deploy",help="serve a model")
+@click.argument('model_name', required=True)
+def serve_model():
+    raise NotImplementedError
+
+
+@click.command(name="monitor",help="monitor a deployed model")
+@click.argument('model_name',required = True)
+def monitor_model():
+    raise NotImplementedError
+
+
+# Configure command group
 @click.command(help="configure plasma")
 def configure():
     pass
 
 # Workflow command group
 
-
-@click.group(help="Manage Plasma Workflows")
+@click.group(help="manage plasma workflows")
 def workflow():
     pass
 
@@ -52,12 +75,12 @@ def describe_workflow(workflow_name):
 @click.command(name="schedule", help="schedule workflows")
 @click.argument('workflow_name', required=True)
 def schedule_workflow(workflow_name):
-    pass
+    os.system('crontab -e')
 
 
 # Component command group
 
-@click.group(help="Manage Plasma Components")
+@click.group(help="manage plasma components")
 def component():
     pass
 
@@ -88,6 +111,9 @@ def run_component(component_name, parameters):
 
 
 def command_dispatcher():
+    model.add_command(list_model)
+    model.add_command(serve_model)
+    model.add_command(monitor_model)
     workflow.add_command(list_workflow)
     workflow.add_command(run_workflow)
     workflow.add_command(describe_workflow)
@@ -100,4 +126,5 @@ def command_dispatcher():
     plasma_cli.add_command(status)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
+    plasma_cli.add_command(model)
     return plasma_cli
