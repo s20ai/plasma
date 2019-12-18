@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 from core.utils import get_status
+import core.component_manager as component_manager
+import core.execution_engine as execution_engine
 import click
 import os
 
@@ -87,27 +89,34 @@ def component():
 
 @click.command(name="list", help="list components")
 def list_component():
-    pass
+    component_manager.list_components()
 
 
 @click.command(name="search", help="search for components")
 @click.argument('component_name', required=True)
 def search_component(component_name):
-    pass
+    component_manager.search_components(component_name)
 
 
 @click.command(name="get", help="download components")
 @click.argument('component_name', required=True)
 def get_component(component_name):
-    pass
+    component_manager.download_component(component_name)
+
+
+@click.command(name="describe", help="download components")
+@click.argument('component_name', required=True)
+def describe_component(component_name):
+    component_manager.describe_component(component_name)
 
 
 @click.command(name="run", help="run components")
 @click.argument('component_name', required=True)
 @click.option("--parameters", "-p", multiple=True)
 def run_component(component_name, parameters):
-    print(parameters)
-    pass
+    output = execution_engine.run_component(component_name,
+            parameters)
+    print(output)
 
 
 def command_dispatcher():
@@ -121,6 +130,7 @@ def command_dispatcher():
     component.add_command(list_component)
     component.add_command(search_component)
     component.add_command(get_component)
+    component.add_command(describe_component)
     component.add_command(run_component)
     plasma_cli.add_command(configure)
     plasma_cli.add_command(status)
