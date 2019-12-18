@@ -93,7 +93,7 @@ def setup_virtual_environment(requirements_path,workflow_name):
         logger.info('activating virtual environment')
         output = os.system('bash '+venv_path+'/bin/activate')
         logger.info('installing dependencies')
-        output = os.system('pip3 install -r '+requirements_path)
+        output = subprocess.check_output(['pip3','install','-r',requirements_path])
         return True
     except Exception as e:
         logger.error("Unable to setup virtual environment")
