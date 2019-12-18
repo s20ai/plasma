@@ -2,17 +2,21 @@
 
 import requests
 from core.utils import get_config
-import os,zipfile,io,logging
+import os
+import zipfile
+import io
+import logging
 from core.execution_engine import execute_workflow
 
 plasma_config = get_config()
 logger = logging.getLogger('Workflow Manager')
 
+
 def describe_workflow(name):
     logger.debug('Executing describe workflow')
     if os.path.exists(plasma_config['workflows_path']+name):
         readme_file = plasma_config['workflows_path']+name+'/README'
-        with open(readme_file,'r') as readme:
+        with open(readme_file, 'r') as readme:
             print(readme.read())
     else:
         print('\n> workflow description not found.\n')
