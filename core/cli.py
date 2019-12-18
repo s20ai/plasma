@@ -17,7 +17,7 @@ def status():
     get_status()
 
 
-@click.command(help="Connect to plasma dashboard")
+@click.command(help="connect to plasma dashboard")
 def connect():
     raise NotImplementedError
 
@@ -66,6 +66,7 @@ def list_workflow():
 @click.command(name="run", help="run workflow")
 @click.argument('workflow_name', required=True)
 def run_workflow(workflow_name):
+    print('\n> Running workflow '+workflow_name+'\n')
     workflow_manager.run_workflow(workflow_name)
 
 
