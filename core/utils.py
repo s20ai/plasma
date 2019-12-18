@@ -43,9 +43,9 @@ def get_config():
 def get_status():
     print('Plasma')
     print('Version : 0.1')
-    print('Active Components : 2')
-    print('Active Workflows : 1')
 
 
-def parse_parameters(parameters):
-    print(parameters)
+def configure_plasma():
+    home = str(Path.home())
+    config_file_path = home+'/.plasma/plasma_config.json'
+    print('Edit the config file at '+config_file_path+' to change defaults.')
