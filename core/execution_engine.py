@@ -9,7 +9,7 @@ logger = logging.getLogger("WXE")
 
 def load_workflow_file(workflow_name):
     try:
-        logger.info('parsing workflow file')
+        logger.info('loading workflow file')
         config = get_config()
         workflow_path = config['workflows_path'] + workflow_name
         with open(workflow_path) as workflow:
@@ -17,8 +17,10 @@ def load_workflow_file(workflow_name):
         return workflow
     except FileNotFoundError:
         logger.error('Unable to execute workflow : File Not Found')
+        exit(1)
     except Error as e:
         logger.error('Unable to execute workflow :'+str(e))
+        exit(1)
 
 
 def validate_workflow(workflow):
