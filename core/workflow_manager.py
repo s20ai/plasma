@@ -29,7 +29,7 @@ def list_workflows():
     if workflows:
         print('\n> listing workflows ')
         for item in workflows:
-            if item.endswith('.yaml'):
+            if item.endswith('.yml'):
                 print('\t- '+item)
         print()
     else:
