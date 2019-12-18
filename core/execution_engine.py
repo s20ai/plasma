@@ -8,6 +8,7 @@ import os
 logger = logging.getLogger("WXE")
 plasma_config = get_config()
 
+
 def load_workflow_file(workflow_name):
     try:
         logger.info('loading workflow file')
@@ -31,7 +32,7 @@ def load_workflow_file(workflow_name):
 def validate_workflow(workflow):
     logger.info('validating workflow file')
     workflow_keys = list(workflow.keys())
-    required_keys = ["name","description","version","workflow"]
+    required_keys = ["name", "description", "version", "workflow"]
     for key in required_keys:
         if key not in workflow_keys:
             logger.error('unable to execute workflow')
@@ -39,7 +40,6 @@ def validate_workflow(workflow):
             exit(1)
     verified = verify_components(workflow)
     return verified
-    
 
 
 def verify_components(workflow):
@@ -56,7 +56,6 @@ def verify_components(workflow):
         else:
             verified = True
     return verified
-
 
 
 def generate_workflow_requirements():
