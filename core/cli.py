@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from core.utils import get_status
+from core.utils import get_status, configure_plasma
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
@@ -49,7 +49,7 @@ def monitor_model():
 # Configure command group
 @click.command(help="configure plasma")
 def configure():
-    pass
+    configure_plasma()
 
 # Workflow command group
 
