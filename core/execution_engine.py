@@ -10,8 +10,8 @@ plasma_config = get_config()
 
 
 def load_workflow_file(workflow_name):
+    logger.info('loading workflow file')
     try:
-        logger.info('loading workflow file')
         config = get_config()
         workflow_path = config['workflows_path'] + workflow_name
         with open(workflow_path) as workflow_file:
@@ -58,9 +58,28 @@ def verify_components(workflow):
     return verified
 
 
-def generate_workflow_requirements():
+def generate_workflow_requirements(workflow, workflow_name):
     logger.info('generating workflow requirements')
-    raise NotImplementedError
+    try:
+        components = list(workflow['workflow'].keys())
+        requirements_list = []
+        for component in components:
+            requirements_path = plasma_config['components_path'] + \
+                component+'/requirements.txt'
+            with open(requirements_path, 'r') as requirements_file:
+                requirements = requirements_file.read().split('\n')
+                requirements = [x for x in requirements if x != '']
+                requirements_list += requirements
+        workflow_requirements_path = plasma_config['data_path'] + \
+            workflow_name+'.requirements'
+        with open(workflow_requirements_path, 'w') as file:
+            requirements_string = '\n'.join(requirements_list)
+            file.write(requirements_string)
+        return workflow_requirements_path
+    except Exception as e:
+        logger.error('Failed to generate requirementes file')
+        logger.error(e)
+        exit(1)
 
 
 def setup_virtual_environment():
@@ -77,9 +96,9 @@ def run_workflow(workflow_name):
     workflow = load_workflow_file(workflow_name)
     workflow_valid = validate_workflow(workflow)
     if workflow_valid:
-        requirements = generate_workflow_requirements(workflow)
+        requirements = generate_workflow_requirements(workflow, workflow_name)
         virtual_environment = setup_virtual_environment(requirements)
         execute_workflow(workflow, virtual_environment)
     else:
-        logger.error('invalid Workflow')
+        logger.error('invalid workflow')
         exit(1)
