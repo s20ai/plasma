@@ -3,7 +3,7 @@
 import requests
 from core.utils import get_config
 import os,zipfile,io,logging
-from execution_engine import execute_workflow
+from core.execution_engine import execute_workflow
 
 plasma_config = get_config()
 logger = logging.getLogger('Workflow Manager')
