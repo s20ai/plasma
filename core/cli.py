@@ -116,9 +116,10 @@ def describe_component(component_name):
 @click.argument('component_name', required=True)
 @click.option("--parameters", "-p", multiple=True)
 def run_component(component_name, parameters):
-    output = execution_engine.run_component(component_name,
-            parameters)
-    print(output)
+    #output = execution_engine.run_component(component_name,
+           # parameters)
+    #print(output)
+    raise NotImplementedError
 
 
 def command_dispatcher():
