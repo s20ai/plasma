@@ -2,6 +2,7 @@
 
 from core.utils import get_status
 import core.component_manager as component_manager
+import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
 import click
 import os
@@ -59,19 +60,19 @@ def workflow():
 
 @click.command(name="list", help="list existing workflows")
 def list_workflow():
-    pass
+    workflow_manager.list_workflows()
 
 
 @click.command(name="run", help="run workflow")
 @click.argument('workflow_name', required=True)
 def run_workflow(workflow_name):
-    pass
+    workflow_manager.run_workflow(workflow_name)
 
 
 @click.command(name="describe", help="describe workflow")
 @click.argument('workflow_name', required=True)
 def describe_workflow(workflow_name):
-    pass
+    workflow_manager.describe_workflow(workflow_name)
 
 
 @click.command(name="schedule", help="schedule workflows")
