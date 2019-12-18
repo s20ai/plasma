@@ -14,19 +14,23 @@ def setup_plasma():
         components_path = plasma_path + 'components/'
         workflows_path = plasma_path + 'workflows/'
         data_path = plasma_path + 'data/'
+        models_path = plasma_path + 'models/'
         os.mkdir(plasma_path)
         os.mkdir(data_path)
         os.mkdir(log_path)
         os.mkdir(components_path)
         os.mkdir(workflows_path)
+        os.mkdir(models_path)
         plasma_config['plasma_path'] = plasma_path
         plasma_config['log_path'] = log_path
         plasma_config['data_path'] = data_path
         plasma_config['components_path'] = components_path
+        plasma_config['models_path'] = models_path
         plasma_config['workflows_path'] = workflows_path
         with open(plasma_path+'plasma_config.json','w') as config_file:
             json.dump(plasma_config,config_file)
     return plasma_config
+
 
 def get_config():
     home = str(Path.home())
@@ -41,3 +45,7 @@ def get_status():
     print('Version : 0.1')
     print('Active Components : 2')
     print('Active Workflows : 1')
+
+
+def parse_parameters(parameters):
+    print(parameters)
