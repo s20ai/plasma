@@ -4,6 +4,9 @@ import logging
 from core.utils import get_config
 import yaml
 import os
+import venv
+import sys
+import subprocess
 
 logger = logging.getLogger("WXE")
 plasma_config = get_config()
@@ -82,8 +85,22 @@ def generate_workflow_requirements(workflow, workflow_name):
         exit(1)
 
 
-def setup_virtual_environment():
-    logger.info('setting up virtual environment')
+def setup_virtual_environment(requirements_path,workflow_name):
+    try:
+        logger.info('setting up virtual environment')
+        venv_path = plasma_config['data_path']+workflow_name+'_venv'
+        venv.create(venv_path)
+        logger.info('activating virtual environment')
+        output = os.system('bash '+venv_path+'/bin/activate')
+        logger.info('installing dependencies')
+        output = os.system('pip3 install -r '+requirements_path)
+        return True
+    except Exception as e:
+        logger.error("Unable to setup virtual environment")
+        exit(1)
+
+
+def execute_step():
     raise NotImplementedError
 
 
@@ -92,13 +109,14 @@ def execute_workflow():
     raise NotImplementedError
 
 
+
 def run_workflow(workflow_name):
     workflow = load_workflow_file(workflow_name)
     workflow_valid = validate_workflow(workflow)
     if workflow_valid:
         requirements = generate_workflow_requirements(workflow, workflow_name)
-        virtual_environment = setup_virtual_environment(requirements)
-        execute_workflow(workflow, virtual_environment)
+        virtual_environment = setup_virtual_environment(requirements,workflow_name)
+        #execute_workflow(workflow, virtual_environment)
     else:
         logger.error('invalid workflow')
         exit(1)
