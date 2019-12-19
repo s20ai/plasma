@@ -46,3 +46,19 @@ def run_workflow(name):
 def schedule_workflow(name):
     logger.debug('Executing schedule workflow')
     raise NotImplementedError
+
+
+def parse_workflow(workflow):
+    logger.debug('Executing parse_workflow')
+    workflow = workflow['workflow']
+    components = list(workflow.keys())
+    command_set = []
+    for component in components:
+        operations = list(workflow[component].keys())
+        for operation in operations:
+            command = {}
+            command['component'] = component
+            command['operation'] = operation
+            command['parameters'] = workflow[component][operation]
+            command_set.append(command)
+    return command_set
