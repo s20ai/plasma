@@ -3,6 +3,7 @@
 import requests
 from core.utils import get_config
 import os,zipfile,io
+import importlib.util
 
 api_url = "https://dfdb32ca.s20.ai/api/v1/components"
 plasma_config = get_config()
