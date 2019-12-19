@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from core.utils import setup_plasma
 plasma_config  = setup_plasma()
 from core.cli import command_dispatcher

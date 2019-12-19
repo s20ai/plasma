@@ -124,6 +124,7 @@ def execute_step(step):
         component_path = plasma_config['components_path'] + \
             component_name+'/component.py'
         component = component_loader(component_name, component_path)
+        logging.getLogger(component_name).setLevel(logging.WARNING)
         output = component.main(step)
         return output
     except Exception as e:
@@ -142,7 +143,6 @@ def execute_workflow(workflow):
             output = execute_step(step)
             if type(output) is dict:
                 output_dict.update(output)
-        print(output_dict)
         return True
     except Exception as e:
         logger.error('exception : '+str(e))
@@ -154,8 +154,7 @@ def run_workflow(workflow_name):
     workflow_valid = validate_workflow(workflow)
     if workflow_valid:
         requirements = generate_workflow_requirements(workflow, workflow_name)
-        virtual_environment = setup_virtual_environment(
-            requirements, workflow_name)
+        #virtual_environment = setup_virtual_environment(requirements, workflow_name)
         state = execute_workflow(workflow)
         if state is True:
             logger.info('Workflow Executed')

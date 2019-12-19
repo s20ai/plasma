@@ -31,3 +31,7 @@ Run the following commands
 
     chmod +x plasma
     ./plasma --help
+
+## Known Bugs
+
+- Unable to switch virtual environments before executing 
