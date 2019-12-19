@@ -2,6 +2,8 @@
 
 import logging
 from core.utils import get_config
+from core.component_manager import component_loader
+from core.utils import parse_workflow
 import yaml
 import os
 import venv
@@ -80,7 +82,7 @@ def generate_workflow_requirements(workflow, workflow_name):
             file.write(requirements_string)
         return workflow_requirements_path
     except Exception as e:
-        logger.error('Failed to generate requirementes file')
+        logger.error('failed to generate requirementes file')
         logger.error(e)
         exit(1)
 
@@ -96,18 +98,32 @@ def setup_virtual_environment(requirements_path,workflow_name):
         output = subprocess.check_output(['pip3','install','-r',requirements_path])
         return True
     except Exception as e:
-        logger.error("Unable to setup virtual environment")
+        logger.error("unable to setup virtual environment")
         exit(1)
 
 
-def execute_step():
-    raise NotImplementedError
+def execute_step(step):
+    try:
+        logger.info('executing step :'+step['component'])
+        component_name = step['component']
+        component_path = plasma_config['components_path']+component_name+'/component.py'
+        component = component_loader(component_name,component_path)
+        output = component.main(step)
+    except Exception as e:
+        logger.error('failed to execute step : %s > %s'%(step['component'],step['operation']))
+        logger.error(e)
 
 
-def execute_workflow():
+def execute_workflow(workflow):
     logger.info('executing workflow')
-    raise NotImplementedError
-
+    try:
+        workflow_steps = parse_workflow(workflow)
+        for step in workflow_steps:
+            execute_step(step)
+        return True
+    except Exception as e:
+        logger.error('exception : '+str(e))
+        exit(1)
 
 
 def run_workflow(workflow_name):
@@ -116,7 +132,12 @@ def run_workflow(workflow_name):
     if workflow_valid:
         requirements = generate_workflow_requirements(workflow, workflow_name)
         virtual_environment = setup_virtual_environment(requirements,workflow_name)
-        #execute_workflow(workflow, virtual_environment)
+        state = execute_workflow(workflow)
+        if state is True:
+            logger.info('Workflow Executed')
+        else:
+            logger.info('Failed to execute workflow')
+        print('\n\n')
     else:
         logger.error('invalid workflow')
         exit(1)
