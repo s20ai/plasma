@@ -21,7 +21,7 @@ chmod +x plasma
 
 ## Docs
 
-[Writing Custom Components]: https://github.com/s20ai/plasma-docs/blob/master/writing_components.md
+[Writing Custom Components](https://github.com/s20ai/plasma-docs/blob/master/writing_components.md)
 
 ## Known Bugs
 
