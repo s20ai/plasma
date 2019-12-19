@@ -34,13 +34,13 @@ The following component can take 2 numbers and add/subtract them.
 ```
 def add(parameters):
 	result = int(parameters['number_a']+parameters['number_b'])
-	print(result)
-	return result
+	output = {"result":result}
+	return output
 
 def subtract(parameters):
 	result = int(parameters['number_a']-parameters['number_b'])
-	print(result)
-	return result
+	output = {"result":result}
+	return output
 
 def main(args):
 	if args['operation'] == 'add':
@@ -54,10 +54,39 @@ Corresponding YAML config :
 
 ```
 component-name
- -add:
-  - number_a:5
-  - number_b:5
+  add:
+    number_a:5
+    number_b:5
 ```
+
+## Returning values from components
+
+Plasma allows you to pass values from one component to the next by using dictionaries.
+If your component returns output in the form of a dictionary. For example consider the
+following component
+
+```
+def main(args):
+	if args['operation'] == 'show_secret_message':
+		output = {"secret-message":"Darth Vader is Luke's father"}
+		return output
+```
+
+And the workflow yaml file : 
+
+```
+message-reader:
+	show_secret_message:
+		# assume param1 and param2 parameters you passed to the component
+		param1: "a"
+		param2: "b"
+message-sender:
+	send_secret_message:
+		# the component message-sender can access the variable secre-message
+		# returned by the previous component
+		message: secret-message
+```
+
 
 ## Good Practices
 
