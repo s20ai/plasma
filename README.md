@@ -6,10 +6,17 @@ end to end ML Workflows.
 
 ## Usage
 
-Run the following commands
+#### Installing dependencies :
+```
+pip3 -r requriements.txt
+```
 
-    chmod +x plasma
-    ./plasma --help
+#### Running Plasma
+
+```
+chmod +x plasma
+./plasma
+```
 
 
 ## Docs
