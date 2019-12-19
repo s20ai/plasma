@@ -1,6 +1,6 @@
 import json, os
 from pathlib import Path
-
+import importlib.util
 
 def setup_plasma():
     home = str(Path.home())
@@ -49,3 +49,12 @@ def configure_plasma():
     home = str(Path.home())
     config_file_path = home+'/.plasma/plasma_config.json'
     print('Edit the config file at '+config_file_path+' to change defaults.')
+
+
+def component_loader(component_name,component_path):
+    spec = importlib.util.spec_from_file_location(component_name,component_path)
+    component = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(component)
+    return component
+
+
