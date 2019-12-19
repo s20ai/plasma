@@ -6,7 +6,7 @@ import os
 import zipfile
 import io
 import logging
-from core.execution_engine import run_workflow as runwf
+import core.execution_engine as execution_engine
 
 plasma_config = get_config()
 logger = logging.getLogger('Workflow Manager')
@@ -38,7 +38,7 @@ def list_workflows():
 
 def run_workflow(name):
     logger.debug('Executing run workflow')
-    execution_status = execution_engine.runwf(name)
+    execution_status = execution_engine.run_workflow(name)
     logger.debug('Execution status : '+str(execution_status))
     return execution_status
 
