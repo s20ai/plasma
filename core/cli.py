@@ -7,6 +7,7 @@ import core.execution_engine as execution_engine
 import click
 import os
 
+
 @click.group()
 def plasma_cli():
     pass
@@ -29,19 +30,19 @@ def model():
     pass
 
 
-@click.command(name="list",help="list connected models")
+@click.command(name="list", help="list connected models")
 def list_model():
     raise NotImplementedError
 
 
-@click.command(name="deploy",help="serve a model")
+@click.command(name="deploy", help="serve a model")
 @click.argument('model_name', required=True)
 def serve_model():
     raise NotImplementedError
 
 
-@click.command(name="monitor",help="monitor a deployed model")
-@click.argument('model_name',required = True)
+@click.command(name="monitor", help="monitor a deployed model")
+@click.argument('model_name', required=True)
 def monitor_model():
     raise NotImplementedError
 
@@ -52,6 +53,7 @@ def configure():
     configure_plasma()
 
 # Workflow command group
+
 
 @click.group(help="manage plasma workflows")
 def workflow():
@@ -116,9 +118,9 @@ def describe_component(component_name):
 @click.argument('component_name', required=True)
 @click.option("--parameters", "-p", multiple=True)
 def run_component(component_name, parameters):
-    #output = execution_engine.run_component(component_name,
+    # output = execution_engine.run_component(component_name,
            # parameters)
-    #print(output)
+    # print(output)
     raise NotImplementedError
 
 

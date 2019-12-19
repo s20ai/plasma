@@ -46,4 +46,3 @@ def run_workflow(name):
 def schedule_workflow(name):
     logger.debug('Executing schedule workflow')
     raise NotImplementedError
-

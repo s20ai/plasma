@@ -65,6 +65,3 @@ def parse_workflow(workflow):
             command['parameters'] = workflow[component][operation]
             command_set.append(command)
     return command_set
-
-
-

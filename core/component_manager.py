@@ -2,7 +2,9 @@
 
 import requests
 from core.utils import get_config
-import os,zipfile,io
+import os
+import zipfile
+import io
 import importlib.util
 
 api_url = "https://dfdb32ca.s20.ai/api/v1/components"
@@ -28,7 +30,7 @@ def download_component(name):
 def describe_component(name):
     if os.path.exists(plasma_config['components_path']+name):
         readme_file = plasma_config['components_path']+name+'/README'
-        with open(readme_file,'r') as readme:
+        with open(readme_file, 'r') as readme:
             print(readme.read())
     else:
         print('\n> component not found locally\n')
@@ -68,4 +70,3 @@ def component_loader(component_name, component_path):
     component = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(component)
     return component
-

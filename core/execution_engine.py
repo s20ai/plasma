@@ -87,7 +87,7 @@ def generate_workflow_requirements(workflow, workflow_name):
         exit(1)
 
 
-def setup_virtual_environment(requirements_path,workflow_name):
+def setup_virtual_environment(requirements_path, workflow_name):
     try:
         logger.info('setting up virtual environment')
         venv_path = plasma_config['data_path']+workflow_name+'_venv'
@@ -95,7 +95,8 @@ def setup_virtual_environment(requirements_path,workflow_name):
         logger.info('activating virtual environment')
         output = os.system('bash '+venv_path+'/bin/activate')
         logger.info('installing dependencies')
-        output = subprocess.check_output(['pip3','install','-r',requirements_path])
+        output = subprocess.check_output(
+            ['pip3', 'install', '-r', requirements_path])
         return True
     except Exception as e:
         logger.error("unable to setup virtual environment")
@@ -106,11 +107,13 @@ def execute_step(step):
     try:
         logger.info('executing step :'+step['component'])
         component_name = step['component']
-        component_path = plasma_config['components_path']+component_name+'/component.py'
-        component = component_loader(component_name,component_path)
+        component_path = plasma_config['components_path'] + \
+            component_name+'/component.py'
+        component = component_loader(component_name, component_path)
         output = component.main(step)
     except Exception as e:
-        logger.error('failed to execute step : %s > %s'%(step['component'],step['operation']))
+        logger.error('failed to execute step : %s > %s' %
+                     (step['component'], step['operation']))
         logger.error(e)
 
 
@@ -131,7 +134,8 @@ def run_workflow(workflow_name):
     workflow_valid = validate_workflow(workflow)
     if workflow_valid:
         requirements = generate_workflow_requirements(workflow, workflow_name)
-        virtual_environment = setup_virtual_environment(requirements,workflow_name)
+        virtual_environment = setup_virtual_environment(
+            requirements, workflow_name)
         state = execute_workflow(workflow)
         if state is True:
             logger.info('Workflow Executed')
