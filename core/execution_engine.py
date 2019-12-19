@@ -141,7 +141,7 @@ def run_workflow(workflow_name):
             logger.info('Workflow Executed')
         else:
             logger.info('Failed to execute workflow')
-        print('\n\n')
+        print('\n')
     else:
         logger.error('invalid workflow')
         exit(1)
