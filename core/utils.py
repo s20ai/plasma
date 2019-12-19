@@ -52,3 +52,21 @@ def configure_plasma():
     config_file_path = home+'/.plasma/plasma_config.json'
     print('Edit the config file at '+config_file_path+' to change defaults.')
 
+
+def parse_workflow(workflow):
+    logger.debug('Executing parse_workflow')
+    workflow = workflow['workflow']
+    components = list(workflow.keys())
+    command_set = []
+    for component in components:
+        operations = list(workflow[component].keys())
+        for operation in operations:
+            command = {}
+            command['component'] = component
+            command['operation'] = operation
+            command['parameters'] = workflow[component][operation]
+            command_set.append(command)
+    return command_set
+
+
+

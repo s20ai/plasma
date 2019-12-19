@@ -6,7 +6,7 @@ import os
 import zipfile
 import io
 import logging
-import core.execution_engine as execution_engine
+from core.execution_engine import run_workflow as runwf
 
 plasma_config = get_config()
 logger = logging.getLogger('Workflow Manager')
@@ -38,7 +38,7 @@ def list_workflows():
 
 def run_workflow(name):
     logger.debug('Executing run workflow')
-    execution_status = execution_engine.run_workflow(name)
+    execution_status = execution_engine.runwf(name)
     logger.debug('Execution status : '+str(execution_status))
     return execution_status
 
@@ -47,18 +47,3 @@ def schedule_workflow(name):
     logger.debug('Executing schedule workflow')
     raise NotImplementedError
 
-
-def parse_workflow(workflow):
-    logger.debug('Executing parse_workflow')
-    workflow = workflow['workflow']
-    components = list(workflow.keys())
-    command_set = []
-    for component in components:
-        operations = list(workflow[component].keys())
-        for operation in operations:
-            command = {}
-            command['component'] = component
-            command['operation'] = operation
-            command['parameters'] = workflow[component][operation]
-            command_set.append(command)
-    return command_set
