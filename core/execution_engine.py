@@ -103,6 +103,20 @@ def setup_virtual_environment(requirements_path, workflow_name):
         exit(1)
 
 
+def update_variables(step,output_dict):
+    output_keys = list(output_dict.keys())
+    update_list = []
+    updated_parameters = {}
+    for key,value in step['parameters'].items():
+        if value in output_keys:
+            updated_parameters[key] = output_dict[value]
+        else:
+            updated_parameters[key] = value
+    step['parameters'] = updated_parameters
+    return step
+
+
+
 def execute_step(step):
     try:
         logger.info('executing step :'+step['component'])
@@ -111,6 +125,7 @@ def execute_step(step):
             component_name+'/component.py'
         component = component_loader(component_name, component_path)
         output = component.main(step)
+        return output
     except Exception as e:
         logger.error('failed to execute step : %s > %s' %
                      (step['component'], step['operation']))
@@ -120,9 +135,14 @@ def execute_step(step):
 def execute_workflow(workflow):
     logger.info('executing workflow')
     try:
+        output_dict = {}
         workflow_steps = parse_workflow(workflow)
         for step in workflow_steps:
-            execute_step(step)
+            step = update_variables(step,output_dict)
+            output = execute_step(step)
+            if type(output) is dict:
+                output_dict.update(output)
+        print(output_dict)
         return True
     except Exception as e:
         logger.error('exception : '+str(e))
