@@ -1,7 +1,6 @@
 import json
 import os
 from pathlib import Path
-import importlib.util
 
 
 def setup_plasma():
@@ -54,7 +53,6 @@ def configure_plasma():
 
 
 def parse_workflow(workflow):
-    logger.debug('Executing parse_workflow')
     workflow = workflow['workflow']
     components = list(workflow.keys())
     command_set = []
