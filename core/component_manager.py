@@ -59,4 +59,12 @@ def search_components(query):
         print()
     else:
         print('\n> no results found')
-    
+
+
+def component_loader(component_name, component_path):
+    spec = importlib.util.spec_from_file_location(
+        component_name, component_path)
+    component = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(component)
+    return component
+
