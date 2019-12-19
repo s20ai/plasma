@@ -1,6 +1,8 @@
-import json, os
+import json
+import os
 from pathlib import Path
 import importlib.util
+
 
 def setup_plasma():
     home = str(Path.home())
@@ -27,8 +29,8 @@ def setup_plasma():
         plasma_config['components_path'] = components_path
         plasma_config['models_path'] = models_path
         plasma_config['workflows_path'] = workflows_path
-        with open(plasma_path+'plasma_config.json','w') as config_file:
-            json.dump(plasma_config,config_file)
+        with open(plasma_path+'plasma_config.json', 'w') as config_file:
+            json.dump(plasma_config, config_file)
     return plasma_config
 
 
@@ -36,7 +38,7 @@ def get_config():
     home = str(Path.home())
     config_file_path = home+'/.plasma/plasma_config.json'
     with open(config_file_path) as config_file:
-        plasma_config=json.load(config_file)
+        plasma_config = json.load(config_file)
     return plasma_config
 
 
@@ -51,10 +53,9 @@ def configure_plasma():
     print('Edit the config file at '+config_file_path+' to change defaults.')
 
 
-def component_loader(component_name,component_path):
-    spec = importlib.util.spec_from_file_location(component_name,component_path)
+def component_loader(component_name, component_path):
+    spec = importlib.util.spec_from_file_location(
+        component_name, component_path)
     component = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(component)
     return component
-
-
