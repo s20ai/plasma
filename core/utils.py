@@ -32,15 +32,33 @@ def create_plasma_project(project_name):
     return plasma_config
 
 
+def find_config_file(path):
+    try:
+        current_path = os.path.abspath(path)
+        plasma_file = 'plasma_config.json'
+        if plasma_file in os.listdir(current_path):
+            plasma_file_path = current_path+'/'+plasma_file
+            return plasma_file_path
+        else:
+            parent_dir = str(Path(current_path).parent)
+            if parent_dir != current_path:
+                return find_config_file(parent_dir)
+            else:
+                return False
+    except Exception as e:
+        return False
+    
+
 def get_config():
     try:
-        config_file_path = './plasma_config.json'
-        with open(config_file_path) as config_file:
-            plasma_config = json.load(config_file)
-        return plasma_config
-    except FileNotFoundError:
-        print("\n> the current directory doesn't have a plasma_project\n")
-        exit(1)
+        config_file_path = find_config_file('.')
+        if config_file_path:
+            with open(config_file_path) as config_file:
+                plasma_config = json.load(config_file)
+            return plasma_config
+        else:
+            print("\n> not a plasma project directory\n")
+            exit(1)
     except Exception as e:
         print("> failed to load plasma_config.json")
         exit(1)
