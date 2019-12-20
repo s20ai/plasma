@@ -19,7 +19,7 @@ class OrderedGroup(click.Group):
 
 
 @click.group(cls=OrderedGroup)
-def plasma_cli():
+def cli():
     pass
 
 
@@ -126,7 +126,7 @@ def run_component(component_name, parameters):
     raise NotImplementedError
 
 
-def command_dispatcher():
+def plasma_cli():
     model.add_command(list_model)
     model.add_command(serve_model)
     model.add_command(monitor_model)
@@ -138,8 +138,8 @@ def command_dispatcher():
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(describe_component)
-    plasma_cli.add_command(initialize_project)
-    plasma_cli.add_command(component)
-    plasma_cli.add_command(workflow)
-    plasma_cli.add_command(model)
-    return plasma_cli
+    cli.add_command(initialize_project)
+    cli.add_command(component)
+    cli.add_command(workflow)
+    cli.add_command(model)
+    return cli
