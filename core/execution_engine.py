@@ -72,7 +72,7 @@ def setup_virtual_environment(requirements_path, workflow_name):
         exit(1)
 
 
-def update_variables(step,output_dict):
+def update_output_variables(step,output_dict):
     output_keys = list(output_dict.keys())
     update_list = []
     updated_parameters = {}
@@ -108,7 +108,7 @@ def execute_workflow(workflow_steps):
     try:
         output_dict = {}
         for step in workflow_steps:
-            step = update_variables(step,output_dict)
+            step = update_output_variables(step,output_dict)
             output = execute_step(step)
             if type(output) is dict:
                 output_dict.update(output)
