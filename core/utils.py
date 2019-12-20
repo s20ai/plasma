@@ -20,6 +20,7 @@ def create_plasma_project(project_name):
         os.mkdir(components_path)
         os.mkdir(workflows_path)
         os.mkdir(models_path)
+        plasma_config['project_name'] = project_name
         plasma_config['plasma_path'] = plasma_path
         plasma_config['log_path'] = log_path
         plasma_config['data_path'] = data_path
