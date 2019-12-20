@@ -40,10 +40,13 @@ def validate_workflow(workflow):
     required_keys = ["name", "description", "version", "workflow"]
     for key in required_keys:
         if key not in workflow_keys:
-            logger.error('unable to execute workflow')
             logger.error('missing key : '+str(key))
             exit(1)
     verified = verify_components(workflow)
+    valid = parse_workflow(workflow)
+    if not valid:
+        logger.error('workflow format incorrect')
+        exit(1)
     return verified
 
 
