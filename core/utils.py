@@ -65,15 +65,18 @@ def get_config():
 
 
 def parse_workflow(workflow):
-    workflow = workflow['workflow']
-    components = list(workflow.keys())
-    command_set = []
-    for component in components:
-        operations = list(workflow[component].keys())
-        for operation in operations:
-            command = {}
-            command['component'] = component
-            command['operation'] = operation
-            command['parameters'] = workflow[component][operation]
-            command_set.append(command)
-    return command_set
+    try:
+        workflow = workflow['workflow']
+        components = list(workflow.keys())
+        command_set = []
+        for component in components:
+            operations = list(workflow[component].keys())
+            for operation in operations:
+                command = {}
+                command['component'] = component
+                command['operation'] = operation
+                command['parameters'] = workflow[component][operation]
+                command_set.append(command)
+        return command_set
+    except Exception as e:
+        return False
