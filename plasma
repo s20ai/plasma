@@ -1,23 +1,25 @@
 #!/usr/bin/python3
 
-from core.utils import setup_plasma
-plasma_config  = setup_plasma()
-from core.cli import command_dispatcher
+from core.cli import plasma_cli
 from logging.handlers import RotatingFileHandler
 import logging
 import sys
 import os
 import json
+from pathlib import Path
 
 
 if __name__ == "__main__":
-    file_handler = handler = RotatingFileHandler(
-        plasma_config['log_path']+'/plasma.log', maxBytes=10000)
+    plasma_path = str(Path.home())+'/.plasma'
+    if not os.path.exists(plasma_path):
+        os.mkdir(plasma_path)
+    log_file = plasma_path+'/plasma.log'
+    file_handler = handler = RotatingFileHandler(log_file, maxBytes=10000)
     stdout_handler = logging.StreamHandler(sys.stdout)
     handlers = [stdout_handler, file_handler]
     format_string = '%(asctime)s | %(levelname)7s | %(message)s'
     date_format = '%m/%d/%Y %I:%M:%S %p'
     logging.basicConfig(handlers=handlers, level=logging.INFO,
                         format=format_string, datefmt=date_format)   
-    cli = command_dispatcher()
+    cli = plasma_cli()
     cli()
