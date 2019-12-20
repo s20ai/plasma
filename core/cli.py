@@ -5,16 +5,33 @@ import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
 import click
 import os
+import collections
 
 
-@click.group()
+class OrderedGroup(click.Group):
+    def __init__(self, name=None, commands=None, **attrs):
+        super(OrderedGroup, self).__init__(name, commands, **attrs)
+        #: the registered subcommands by their exported names.
+        self.commands = commands or collections.OrderedDict()
+
+    def list_commands(self, ctx):
+        return self.commands
+
+
+@click.group(cls=OrderedGroup)
 def plasma_cli():
     pass
 
 
+@click.command(name="init", help="initialize a plasma project", )
+def initialize_project():
+    raise NotImplementedError
+
+
+
 # Model command group
 
-@click.group(help="manage connected models")
+@click.group(cls=OrderedGroup,help="manage connected models")
 def model():
     pass
 
@@ -38,7 +55,7 @@ def monitor_model():
 # Workflow command group
 
 
-@click.group(help="manage plasma workflows")
+@click.group(cls=OrderedGroup,help="manage plasma workflows")
 def workflow():
     pass
 
@@ -69,7 +86,7 @@ def schedule_workflow(workflow_name):
 
 # Component command group
 
-@click.group(help="manage plasma components")
+@click.group(cls=OrderedGroup,help="manage plasma components")
 def component():
     pass
 
@@ -119,6 +136,7 @@ def command_dispatcher():
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(describe_component)
+    plasma_cli.add_command(initialize_project)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
     plasma_cli.add_command(model)
