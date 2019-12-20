@@ -13,11 +13,6 @@ def plasma_cli():
     pass
 
 
-@click.command(help="connect to plasma dashboard")
-def connect():
-    raise NotImplementedError
-
-
 # Model command group
 
 @click.group(help="manage connected models")
