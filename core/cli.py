@@ -3,6 +3,7 @@
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
+from core.utils import create_plasma_project
 import click
 import os
 import collections
@@ -28,7 +29,7 @@ def cli():
 @click.argument('project_name', required=True)
 @click.command(name="init", help="initialize a plasma project", )
 def initialize_project(project_name):
-    raise NotImplementedError
+    create_plasma_project(project_name)
 
 
 # Model command group
