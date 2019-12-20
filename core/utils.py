@@ -41,11 +41,6 @@ def get_config():
     return plasma_config
 
 
-def get_status():
-    print('Plasma')
-    print('Version : 0.1')
-
-
 def configure_plasma():
     home = str(Path.home())
     config_file_path = home+'/.plasma/plasma_config.json'

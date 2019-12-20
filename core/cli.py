@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from core.utils import get_status, configure_plasma
+from core.utils import configure_plasma
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
@@ -11,11 +11,6 @@ import os
 @click.group()
 def plasma_cli():
     pass
-
-
-@click.command(help="display status information")
-def status():
-    get_status()
 
 
 @click.command(help="connect to plasma dashboard")
@@ -138,7 +133,6 @@ def command_dispatcher():
     component.add_command(describe_component)
     component.add_command(run_component)
     plasma_cli.add_command(configure)
-    plasma_cli.add_command(status)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
     plasma_cli.add_command(model)
