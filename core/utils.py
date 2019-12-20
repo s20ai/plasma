@@ -41,12 +41,6 @@ def get_config():
     return plasma_config
 
 
-def configure_plasma():
-    home = str(Path.home())
-    config_file_path = home+'/.plasma/plasma_config.json'
-    print('Edit the config file at '+config_file_path+' to change defaults.')
-
-
 def parse_workflow(workflow):
     workflow = workflow['workflow']
     components = list(workflow.keys())

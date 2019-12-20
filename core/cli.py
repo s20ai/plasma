@@ -36,12 +36,6 @@ def serve_model():
 def monitor_model():
     raise NotImplementedError
 
-
-# Configure command group
-@click.command(help="configure plasma")
-def configure():
-    configure_plasma()
-
 # Workflow command group
 
 
@@ -127,7 +121,6 @@ def command_dispatcher():
     component.add_command(get_component)
     component.add_command(describe_component)
     component.add_command(run_component)
-    plasma_cli.add_command(configure)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
     plasma_cli.add_command(model)
