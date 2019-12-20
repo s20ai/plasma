@@ -11,10 +11,10 @@ import sys
 import subprocess
 
 logger = logging.getLogger("WXE")
-plasma_config = get_config()
 
 
 def load_workflow_file(workflow_name):
+    plasma_config = get_config()
     logger.info('loading workflow file')
     try:
         config = get_config()
@@ -48,6 +48,7 @@ def validate_workflow(workflow):
 
 
 def verify_components(workflow):
+    plasma_config = get_config()
     logger.info('verifying components')
     components_path = plasma_config['components_path']
     local_components = os.listdir(components_path)
@@ -64,6 +65,7 @@ def verify_components(workflow):
 
 
 def generate_workflow_requirements(workflow, workflow_name):
+    plasma_config = get_config()
     logger.info('generating workflow requirements')
     try:
         components = list(workflow['workflow'].keys())
@@ -88,6 +90,7 @@ def generate_workflow_requirements(workflow, workflow_name):
 
 
 def setup_virtual_environment(requirements_path, workflow_name):
+    plasma_config = get_config()
     try:
         logger.info('setting up virtual environment')
         venv_path = plasma_config['data_path']+workflow_name+'_venv'
@@ -118,6 +121,7 @@ def update_variables(step,output_dict):
 
 
 def execute_step(step):
+    plasma_config = get_config()
     try:
         logger.info('executing step :'+step['component'])
         component_name = step['component']
@@ -154,7 +158,7 @@ def run_workflow(workflow_name):
     workflow_valid = validate_workflow(workflow)
     if workflow_valid:
         requirements = generate_workflow_requirements(workflow, workflow_name)
-        #virtual_environment = setup_virtual_environment(requirements, workflow_name)
+        virtual_environment = setup_virtual_environment(requirements, workflow_name)
         state = execute_workflow(workflow)
         if state is True:
             logger.info('Workflow Executed')

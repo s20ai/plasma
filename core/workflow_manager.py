@@ -8,11 +8,11 @@ import io
 import logging
 import core.execution_engine as execution_engine
 
-plasma_config = get_config()
 logger = logging.getLogger('Workflow Manager')
 
 
 def describe_workflow(name):
+    plasma_config = get_config()
     logger.debug('Executing describe workflow')
     if os.path.exists(plasma_config['workflows_path']+name):
         readme_file = plasma_config['workflows_path']+name+'/README'
@@ -23,6 +23,7 @@ def describe_workflow(name):
 
 
 def list_workflows():
+    plasma_config = get_config()
     logger.debug('Executing list workflows')
     workflows_path = plasma_config['workflows_path']
     workflows = os.listdir(workflows_path)

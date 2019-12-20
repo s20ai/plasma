@@ -8,10 +8,10 @@ import io
 import importlib.util
 
 api_url = "https://dfdb32ca.s20.ai/api/v1/components"
-plasma_config = get_config()
 
 
 def download_component(name):
+    plasma_config = get_config()
     print('\n> downloading '+name+' from the component registry')
     response = requests.get(api_url+'/download/'+name).json()
     component = response.get('data')
@@ -28,6 +28,7 @@ def download_component(name):
 
 
 def describe_component(name):
+    plasma_config = get_config()
     if os.path.exists(plasma_config['components_path']+name):
         readme_file = plasma_config['components_path']+name+'/README'
         with open(readme_file, 'r') as readme:
@@ -37,6 +38,7 @@ def describe_component(name):
 
 
 def list_components():
+    plasma_config = get_config()
     components_path = plasma_config['components_path']
     components = os.listdir(components_path)
     if components:
@@ -50,6 +52,7 @@ def list_components():
 
 
 def search_components(query):
+    plasma_config = get_config()
     print('\n> searching '+query+' in the component registry')
     response = requests.get(api_url+'/search/'+query).json()
     components = response.get('data')
@@ -65,6 +68,7 @@ def search_components(query):
 
 
 def component_loader(component_name, component_path):
+    plasma_config = get_config()
     spec = importlib.util.spec_from_file_location(
         component_name, component_path)
     component = importlib.util.module_from_spec(spec)
