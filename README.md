@@ -15,7 +15,7 @@ Our project roadmap is also available [publicly](https://github.com/s20ai/plasma
 
 #### Installing dependencies :
 ```
-pip3 -r requriements.txt
+pip3 -r requirements.txt
 ```
 
 #### Running Plasma
