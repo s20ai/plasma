@@ -23,10 +23,12 @@ def plasma_cli():
     pass
 
 
-@click.command(name="init", help="initialize a plasma project", )
-def initialize_project():
-    raise NotImplementedError
+# Plasma init 
 
+@click.argument('project_name', required=True)
+@click.command(name="init", help="initialize a plasma project", )
+def initialize_project(project_name):
+    raise NotImplementedError
 
 
 # Model command group
