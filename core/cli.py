@@ -27,7 +27,7 @@ def cli():
 # Plasma init 
 
 @click.argument('project_name', required=True)
-@click.command(name="init", help="initialize a plasma project", )
+@click.command(name="create", help="creates a plasma project", )
 def initialize_project(project_name):
     create_plasma_project(project_name)
 
