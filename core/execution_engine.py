@@ -3,7 +3,7 @@
 import logging
 from core.utils import get_config
 from core.component_manager import component_loader
-from core.utils import parse_workflow
+from core.workflow import Workflow
 import yaml
 import os
 import venv
@@ -11,43 +11,6 @@ import sys
 import subprocess
 
 logger = logging.getLogger("WXE")
-
-
-def load_workflow_file(workflow_name):
-    plasma_config = get_config()
-    logger.info('loading workflow file')
-    try:
-        config = get_config()
-        workflow_path = config['workflows_path'] + workflow_name
-        with open(workflow_path) as workflow_file:
-            workflow = yaml.load(workflow_file, Loader=yaml.FullLoader)
-        return workflow
-    except FileNotFoundError:
-        logger.error('unable to execute workflow : File Not Found')
-        exit(1)
-    except yaml.scanner.ScannerError as e:
-        logger.error('unable to execute workflow : YAML Invalid')
-        logger.error(e)
-        exit(1)
-    except Exception as e:
-        logger.error('unable to execute workflow :'+str(e))
-        exit(1)
-
-
-def validate_workflow(workflow):
-    logger.info('validating workflow file')
-    workflow_keys = list(workflow.keys())
-    required_keys = ["name", "description", "version", "workflow"]
-    for key in required_keys:
-        if key not in workflow_keys:
-            logger.error('missing key : '+str(key))
-            exit(1)
-    verified = verify_components(workflow)
-    valid = parse_workflow(workflow)
-    if not valid:
-        logger.error('workflow format incorrect')
-        exit(1)
-    return verified
 
 
 def verify_components(workflow):
@@ -140,11 +103,10 @@ def execute_step(step):
         logger.error(e)
 
 
-def execute_workflow(workflow):
+def execute_workflow(workflow_steps):
     logger.info('executing workflow')
     try:
         output_dict = {}
-        workflow_steps = parse_workflow(workflow)
         for step in workflow_steps:
             step = update_variables(step,output_dict)
             output = execute_step(step)
@@ -157,12 +119,14 @@ def execute_workflow(workflow):
 
 
 def run_workflow(workflow_name):
-    workflow = load_workflow_file(workflow_name)
-    workflow_valid = validate_workflow(workflow)
+    config = get_config()
+    workflow_path = config['workflows_path'] + workflow_name
+    workflow = Workflow(workflow_path)
+    workflow_valid = workflow.validate()
     if workflow_valid:
-        requirements = generate_workflow_requirements(workflow, workflow_name)
+        requirements = generate_workflow_requirements(workflow.workflow, workflow_name)
         virtual_environment = setup_virtual_environment(requirements, workflow_name)
-        state = execute_workflow(workflow)
+        state = execute_workflow(workflow.steps)
         if state is True:
             logger.info('Workflow Executed')
         else:
