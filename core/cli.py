@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from core.utils import configure_plasma
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
