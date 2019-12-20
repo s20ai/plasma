@@ -119,7 +119,6 @@ def command_dispatcher():
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(describe_component)
-    component.add_command(run_component)
     plasma_cli.add_command(component)
     plasma_cli.add_command(workflow)
     plasma_cli.add_command(model)
