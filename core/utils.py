@@ -3,12 +3,10 @@ import os
 from pathlib import Path
 
 
-def setup_plasma():
-    home = str(Path.home())
-    plasma_path = home+'/.plasma/'
+def create_plasma_project(project_name):
+    plasma_path = os.getcwd()+'/'+project_name
     if os.path.isdir(plasma_path):
-        with open(plasma_path+'plasma_config.json') as config_file:
-            plasma_config = json.load(config_file)
+        print('> directory already exists')
     else:
         plasma_config = {}
         log_path = plasma_path + 'logs/'
@@ -34,11 +32,15 @@ def setup_plasma():
 
 
 def get_config():
-    home = str(Path.home())
-    config_file_path = home+'/.plasma/plasma_config.json'
-    with open(config_file_path) as config_file:
-        plasma_config = json.load(config_file)
-    return plasma_config
+    try:
+        config_file_path = './plasma_config.json'
+        with open(config_file_path) as config_file:
+            plasma_config = json.load(config_file)
+        return plasma_config
+    except FileNotFoundError:
+        print("> the current directory doesn't have a plasma_project")
+    except Exception as e:
+        print("> failed to load plasma_config.json")
 
 
 def parse_workflow(workflow):
