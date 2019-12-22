@@ -30,11 +30,12 @@ def verify_components(workflow):
     return verified
 
 
-def generate_workflow_requirements(workflow, workflow_name):
+def generate_workflow_requirements(workflow):
     plasma_config = get_config()
+    workflow_name = workflow.name
     logger.info('generating workflow requirements')
     try:
-        components = list(workflow['workflow'].keys())
+        components = list(workflow.workflow['workflow'].keys())
         requirements_list = []
         for component in components:
             requirements_path = plasma_config['components_path'] + \
@@ -124,7 +125,7 @@ def run_workflow(workflow_name):
     workflow = Workflow(workflow_path)
     workflow_valid = workflow.validate()
     if workflow_valid:
-        requirements = generate_workflow_requirements(workflow.workflow, workflow_name)
+        requirements = generate_workflow_requirements(workflow)
         virtual_environment = setup_virtual_environment(requirements, workflow_name)
         state = execute_workflow(workflow.steps)
         if state is True:
