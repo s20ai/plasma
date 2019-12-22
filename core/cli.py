@@ -3,7 +3,7 @@
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
-from core.project import create_plasma_project
+from core.project import create_project,load_project,get_project_info
 import click
 import os
 import collections
@@ -41,6 +41,11 @@ def create_project(project_name):
 @click.command(name="load", help="loads a plasma project", )
 def load_project(project_name):
     load_plasma_project(project_name)
+
+
+@click.command(name="info", help="displays plasma project info", )
+def describe_project(project_name):
+    get_project_info()
 
 
 # Model command group
@@ -141,6 +146,7 @@ def run_component(component_name, parameters):
 def plasma_cli():
     project.add_command(create_project)
     project.add_command(load_project)
+    project.add_command(describe_project)
     model.add_command(list_model)
     model.add_command(serve_model)
     model.add_command(monitor_model)
