@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import logging
-from core.utils import get_config
+from core.project import get_config
 from core.component_manager import component_loader
 from core.workflow import Workflow
 import yaml

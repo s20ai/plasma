@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import requests
-from core.utils import get_config
+from core.project import get_config
 import os
 import zipfile
 import io

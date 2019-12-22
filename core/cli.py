@@ -3,7 +3,7 @@
 import core.component_manager as component_manager
 import core.workflow_manager as workflow_manager
 import core.execution_engine as execution_engine
-from core.utils import create_plasma_project
+from core.project import create_plasma_project
 import click
 import os
 import collections
@@ -24,12 +24,23 @@ def cli():
     pass
 
 
-# Plasma init 
+# Plasma project group 
+
+@click.group(cls=OrderedGroup,help='manage plasma projects')
+def project():
+    pass
+
 
 @click.argument('project_name', required=True)
 @click.command(name="create", help="creates a plasma project", )
-def initialize_project(project_name):
+def create_project(project_name):
     create_plasma_project(project_name)
+
+
+@click.argument('project_path', required=True)
+@click.command(name="load", help="loads a plasma project", )
+def load_project(project_name):
+    load_plasma_project(project_name)
 
 
 # Model command group
@@ -128,6 +139,8 @@ def run_component(component_name, parameters):
 
 
 def plasma_cli():
+    project.add_command(create_project)
+    project.add_command(load_project)
     model.add_command(list_model)
     model.add_command(serve_model)
     model.add_command(monitor_model)
@@ -139,7 +152,7 @@ def plasma_cli():
     component.add_command(search_component)
     component.add_command(get_component)
     component.add_command(describe_component)
-    cli.add_command(initialize_project)
+    cli.add_command(project)
     cli.add_command(component)
     cli.add_command(workflow)
     cli.add_command(model)
