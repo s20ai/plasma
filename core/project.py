@@ -3,39 +3,51 @@ import os
 from pathlib import Path
 
 
-def create_plasma_project(project_name):
-    plasma_path = os.getcwd()+'/'+project_name+'/'
+project_config = {}
+
+
+def create_project(project_name):
+    global project_config
+    project_path = os.getcwd()+'/'+project_name+'/'
     if os.path.isdir(plasma_path):
         print('> directory already exists')
     else:
-        plasma_config = {}
-        log_path = plasma_path + 'logs/'
-        components_path = plasma_path + 'components/'
-        workflows_path = plasma_path + 'workflows/'
-        data_path = plasma_path + 'data/'
-        models_path = plasma_path + 'models/'
-        os.mkdir(plasma_path)
-        os.mkdir(data_path)
-        os.mkdir(log_path)
-        os.mkdir(components_path)
-        os.mkdir(workflows_path)
-        os.mkdir(models_path)
-        plasma_config['project_name'] = project_name
-        plasma_config['plasma_path'] = plasma_path
-        plasma_config['log_path'] = log_path
-        plasma_config['data_path'] = data_path
-        plasma_config['components_path'] = components_path
-        plasma_config['models_path'] = models_path
-        plasma_config['workflows_path'] = workflows_path
-        with open(plasma_path+'plasma_config.json', 'w') as config_file:
+        project_config['project_name'] = project_name
+        project_config['project_path'] = project_path
+        project_config['log_path'] = project_path + 'logs/'
+        project_config['components_path'] = project_path + 'components/'
+        project_config['workflows_path'] = project_path + 'workflows/'
+        project_config['data_path'] = project_path + 'data/'
+        project_config['models_path'] = project_path + 'models/'
+        setup_project_directories(project_config)
+        with open(project_path+'.plasma.json', 'w') as config_file:
             json.dump(plasma_config, config_file)
-    return plasma_config
+    return project_config
+
+
+def load_project(project_path):
+    global project_config
+    absolute_path = os.path.abspath('project_path')
+    project_name =  os.path.basename(absolute_path)
+      
+
+def get_project_info(project_path):
+    pass
+
+
+def setup_project_directories(project_config):
+    os.mkdir(plasma_config['project_path'])
+    os.mkdir(plasma_config['log_path'])
+    os.mkdir(plasma_config['components_path'])
+    os.mkdir(plasma_config['workflows_path'])
+    os.mkdir(plasma_config['data_path']) 
+    os.mkdir(plasma_config['models_path'])
 
 
 def find_config_file(path):
     try:
         current_path = os.path.abspath(path)
-        plasma_file = 'plasma_config.json'
+        plasma_file = '.plasma.json'
         if plasma_file in os.listdir(current_path):
             plasma_file_path = current_path+'/'+plasma_file
             return plasma_file_path
