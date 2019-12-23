@@ -52,8 +52,13 @@ def load_project(project_path):
     print('> loaded project '+str(project_name))
 
 
-def get_project_info(project_path):
-    pass
+def get_project_info():
+    global project_config
+    project_config = get_config()
+    print('\n> Project name : '+project_config['project_name'])
+    # List components
+    # List Workflow
+    # List models etc ..
 
 
 def setup_project_directories(project_config):
