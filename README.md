@@ -30,7 +30,7 @@ chmod +x plasma
 
 - [Plasma](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
 - [Projects](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
-- [Components](https://github.com/s20ai/plasma-docs/blob/master/writing_components.md)
+- [Components](https://github.com/s20ai/plasma-docs/blob/master/components.md)
 - [Package Manager](https://github.com/s20ai/plasma-docs/blob/master//package_manager.md)
 - [Workflow](https://github.com/s20ai/plasma-docs/blob/master/workflows.md)
 
