@@ -33,14 +33,14 @@ def project():
 
 @click.argument('project_name', required=True)
 @click.command(name="create", help="creates a plasma project", )
-def create_project(project_name):
-    create_plasma_project(project_name)
+def create_plasma_project(project_name):
+    create_project(project_name)
 
 
 @click.argument('project_path', required=True)
 @click.command(name="load", help="loads a plasma project", )
-def load_project(project_name):
-    load_plasma_project(project_name)
+def load_plasma_project(project_path):
+    load_project(project_path)
 
 
 @click.command(name="info", help="displays plasma project info", )
@@ -144,8 +144,8 @@ def run_component(component_name, parameters):
 
 
 def plasma_cli():
-    project.add_command(create_project)
-    project.add_command(load_project)
+    project.add_command(create_plasma_project)
+    project.add_command(load_plasma_project)
     project.add_command(describe_project)
     model.add_command(list_model)
     model.add_command(serve_model)
