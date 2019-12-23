@@ -43,6 +43,7 @@ def load_project(project_path):
             if not os.path.exists(directory_path):
                 print('> '+directory_name+' path does not exists')
                 print('> creating '+directory_name+' directory at '+directory_path)
+                os.mkdir(direcotry_path)
         except Exception as e:
             print('> Failed to validate project_paths '+str(e))
     config_path = os.path.join(project_config['paths']['project_path'],'.plasma.json')
