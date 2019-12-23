@@ -38,3 +38,4 @@ chmod +x plasma
 
 ## Demos
 
+- [Sentiment Analysis Workflow](https://github.com/s20ai/plasma-demos/tree/master/sentiment-analysis-demo)
