@@ -14,8 +14,8 @@ logger = logging.getLogger('Workflow Manager')
 def describe_workflow(name):
     plasma_config = get_config()
     logger.debug('Executing describe workflow')
-    if os.path.exists(plasma_config['workflows_path']+name):
-        readme_file = plasma_config['workflows_path']+name+'/README'
+    if os.path.exists(plasma_config['paths']['workflows_path']+name):
+        readme_file = plasma_config['paths']['workflows_path']+name+'/README'
         with open(readme_file, 'r') as readme:
             print(readme.read())
     else:
@@ -25,7 +25,7 @@ def describe_workflow(name):
 def list_workflows():
     plasma_config = get_config()
     logger.debug('Executing list workflows')
-    workflows_path = plasma_config['workflows_path']
+    workflows_path = plasma_config['paths']['workflows_path']
     workflows = os.listdir(workflows_path)
     if workflows:
         print('\n> listing workflows ')

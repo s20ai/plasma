@@ -16,7 +16,7 @@ logger = logging.getLogger("WXE")
 def verify_components(workflow):
     plasma_config = get_config()
     logger.info('verifying components')
-    components_path = plasma_config['components_path']
+    components_path = plasma_config['paths']['components_path']
     local_components = os.listdir(components_path)
     workflow_components = list(workflow['workflow'].keys())
     for component in workflow_components:
@@ -38,13 +38,13 @@ def generate_workflow_requirements(workflow):
         components = list(workflow.workflow['workflow'].keys())
         requirements_list = []
         for component in components:
-            requirements_path = plasma_config['components_path'] + \
+            requirements_path = plasma_config['paths']['components_path'] + \
                 component+'/requirements.txt'
             with open(requirements_path, 'r') as requirements_file:
                 requirements = requirements_file.read().split('\n')
                 requirements = [x for x in requirements if x != '']
                 requirements_list += requirements
-        workflow_requirements_path = plasma_config['data_path'] + \
+        workflow_requirements_path = plasma_config['paths']['data_path'] + \
             workflow_name+'.requirements'
         with open(workflow_requirements_path, 'w') as file:
             requirements_string = '\n'.join(requirements_list)
@@ -60,7 +60,7 @@ def setup_virtual_environment(requirements_path, workflow_name):
     plasma_config = get_config()
     try:
         logger.info('setting up virtual environment')
-        venv_path = plasma_config['data_path']+workflow_name+'_venv'
+        venv_path = plasma_config['paths']['data_path']+workflow_name+'_venv'
         venv.create(venv_path)
         logger.info('activating virtual environment')
         output = os.system('bash '+venv_path+'/bin/activate')
@@ -92,7 +92,7 @@ def execute_step(step):
     try:
         logger.info('executing step :'+step['component'])
         component_name = step['component']
-        component_path = plasma_config['components_path'] + \
+        component_path = plasma_config['paths']['components_path'] + \
             component_name+'/component.py'
         component = component_loader(component_name, component_path)
         logging.getLogger(component_name).setLevel(logging.WARNING)
@@ -121,7 +121,7 @@ def execute_workflow(workflow_steps):
 
 def run_workflow(workflow_name):
     config = get_config()
-    workflow_path = config['workflows_path'] + workflow_name
+    workflow_path = config['paths']['workflows_path'] + workflow_name
     workflow = Workflow(workflow_path)
     workflow_valid = workflow.validate()
     if workflow_valid:

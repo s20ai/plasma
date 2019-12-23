@@ -19,7 +19,7 @@ def download_component(name):
         response = requests.get(component['url'])
         print('> extracting zip file')
         zip_file = zipfile.ZipFile(io.BytesIO(response.content))
-        zip_file.extractall(plasma_config['components_path'])
+        zip_file.extractall(plasma_config['paths']['components_path'])
         print('> component stored at '+plasma_config['components_path'])
         print('> download complete\n')
     else:
@@ -29,8 +29,8 @@ def download_component(name):
 
 def describe_component(name):
     plasma_config = get_config()
-    if os.path.exists(plasma_config['components_path']+name):
-        readme_file = plasma_config['components_path']+name+'/README'
+    if os.path.exists(plasma_config['paths']['components_path']+name):
+        readme_file = plasma_config['paths']['components_path']+name+'/README'
         with open(readme_file, 'r') as readme:
             print(readme.read())
     else:
@@ -39,7 +39,7 @@ def describe_component(name):
 
 def list_components():
     plasma_config = get_config()
-    components_path = plasma_config['components_path']
+    components_path = plasma_config['paths']['components_path']
     components = os.listdir(components_path)
     if components:
         print('\n> listing local components ')
@@ -52,7 +52,6 @@ def list_components():
 
 
 def search_components(query):
-    plasma_config = get_config()
     print('\n> searching '+query+' in the component registry')
     response = requests.get(api_url+'/search/'+query).json()
     components = response.get('data')
@@ -68,7 +67,6 @@ def search_components(query):
 
 
 def component_loader(component_name, component_path):
-    plasma_config = get_config()
     spec = importlib.util.spec_from_file_location(
         component_name, component_path)
     component = importlib.util.module_from_spec(spec)
