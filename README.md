@@ -28,11 +28,11 @@ chmod +x plasma
 
 ## Docs
 
-[Plasma](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
-[Projects](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
-[Components](https://github.com/s20ai/plasma-docs/blob/master/writing_components.md)
-[PackageManager](https://github.com/s20ai/plasma-docs/blob/master//package_manager.md)
-[Workflow](https://github.com/s20ai/plasma-docs/blob/master/workflows.md)
+- [Plasma](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
+- [Projects](https://github.com/s20ai/plasma-docs/blob/master/projects.md)
+- [Components](https://github.com/s20ai/plasma-docs/blob/master/writing_components.md)
+- [PackageManager](https://github.com/s20ai/plasma-docs/blob/master//package_manager.md)
+- [Workflow](https://github.com/s20ai/plasma-docs/blob/master/workflows.md)
 
 
 
