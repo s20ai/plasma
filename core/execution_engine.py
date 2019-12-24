@@ -18,7 +18,7 @@ def verify_components(workflow):
     logger.info('verifying components')
     components_path = plasma_config['paths']['components_path']
     local_components = os.listdir(components_path)
-    workflow_components = list(workflow['workflow'].keys())
+    workflow_components = list(workflow.workflow['workflow'].keys())
     for component in workflow_components:
         if component not in local_components:
             logger.error('unable to execute workflow')
@@ -95,7 +95,7 @@ def execute_step(step):
         component_path = plasma_config['paths']['components_path'] + \
             component_name+'/component.py'
         component = component_loader(component_name, component_path)
-        logging.getLogger(component_name).setLevel(logging.WARNING)
+        logging.getLogger(component_name).setLevel(logging.ERROR)
         output = component.main(step)
         return output
     except Exception as e:
@@ -125,8 +125,12 @@ def run_workflow(workflow_name):
     workflow = Workflow(workflow_path)
     workflow_valid = workflow.validate()
     if workflow_valid:
-        requirements = generate_workflow_requirements(workflow)
-        virtual_environment = setup_virtual_environment(requirements, workflow_name)
+        components = verify_components(workflow)
+        if not components:
+            logger.error('components declared in workflow are missing')
+            exit(1)
+        #requirements = generate_workflow_requirements(workflow)
+        #virtual_environment = setup_virtual_environment(requirements, workflow_name)
         state = execute_workflow(workflow.steps)
         if state is True:
             logger.info('Workflow Executed')
