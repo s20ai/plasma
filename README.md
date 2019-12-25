@@ -1,11 +1,19 @@
 # Plasma 
 
-Plasma is an open source tool which can be used to create and maintain
-end to end ML Workflows. Plasma aims to simpify ML Workflow creation.
-This is accomplished by :
+Plasma is an open source tool which can be used to create and maintain end to
+end ML Workflows. Plasma breaks down a machine learning pipeline into smaller
+reusable blocks of code called ‘components’. The sequence in which these
+components are to be executed and the parameters which each component accepts
+and returns are defined in a simple YAML ‘workflow’ file.
 
- - Creating a registry of reusable opensource components which can be searched and accessed from within plasma.
- - Using simple YAML files to define the workflow instead of complex DSLs or DAGs.
+Due to this, the ML codebase becomes a collection of reusable and modular components. 
+Also, Data Scientists don’t need to edit code for running the workflow and changing 
+parameters. This makes the workflow more stable.
+
+Plasma also includes an in-built component manager which allows users to search an 
+online registry of open-source components. This can greatly reduce the amount of 
+time needed to develop the workflow.
+
 
 Plasma is a fairly new tool and might not support everything your ML workflow requires.
 Hence, new component/feature requests can be raised as Github Issues.
