@@ -19,15 +19,13 @@ def verify_components(workflow):
     components_path = plasma_config['paths']['components_path']
     local_components = os.listdir(components_path)
     workflow_components = list(workflow.workflow['workflow'].keys())
-    for component in workflow_components:
-        if component not in local_components:
-            logger.error('unable to execute workflow')
-            logger.error('component not found : '+component)
-            verified = False
-            break
-        else:
-            verified = True
-    return verified
+    missing_components = set(workflow_components) - set(local_components)
+    if(len(missing_components) == 0):
+        return True
+    else:
+        logger.error('unable to execute workflow')
+        logger.error('component not found : ' + ', '.join(missing_components))
+        return False
 
 
 def generate_workflow_requirements(workflow):
@@ -42,7 +40,7 @@ def generate_workflow_requirements(workflow):
                 component+'/requirements.txt'
             with open(requirements_path, 'r') as requirements_file:
                 requirements = requirements_file.read().split('\n')
-                requirements = [x for x in requirements if x != '']
+                requirements = [x for x in requirements if x]
                 requirements_list += requirements
         workflow_requirements_path = plasma_config['paths']['data_path'] + \
             workflow_name+'.requirements'
@@ -51,7 +49,7 @@ def generate_workflow_requirements(workflow):
             file.write(requirements_string)
         return workflow_requirements_path
     except Exception as e:
-        logger.error('failed to generate requirementes file')
+        logger.error('failed to generate requirements file')
         logger.error(e)
         exit(1)
 
@@ -70,12 +68,12 @@ def setup_virtual_environment(requirements_path, workflow_name):
         return True
     except Exception as e:
         logger.error("unable to setup virtual environment")
+        logger.error(e)
         exit(1)
 
 
 def update_output_variables(step,output_dict):
     output_keys = list(output_dict.keys())
-    update_list = []
     updated_parameters = {}
     for key,value in step['parameters'].items():
         if value in output_keys:
@@ -84,7 +82,6 @@ def update_output_variables(step,output_dict):
             updated_parameters[key] = value
     step['parameters'] = updated_parameters
     return step
-
 
 
 def execute_step(step):
@@ -133,9 +130,9 @@ def run_workflow(workflow_name):
         #virtual_environment = setup_virtual_environment(requirements, workflow_name)
         state = execute_workflow(workflow.steps)
         if state is True:
-            logger.info('Workflow Executed')
+            logger.info('workflow executed')
         else:
-            logger.info('Failed to execute workflow')
+            logger.info('failed to execute workflow')
         print('\n')
     else:
         logger.error('invalid workflow')
