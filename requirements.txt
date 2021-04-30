@@ -4,4 +4,4 @@ Click==7.0
 idna==2.8
 PyYAML==5.2
 requests==2.22.0
-urllib3==1.25.7
+urllib3==1.25.8
